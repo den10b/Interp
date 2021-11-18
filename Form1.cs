@@ -24,8 +24,15 @@ namespace Interp
         private void button1_Click(object sender, EventArgs e)
         {
         start = textBox1.Text;
-        place = Int32.Parse(textBox2.Text);
-        amount = Int32.Parse(textBox3.Text);
+            try
+            {
+                place = Int32.Parse(textBox2.Text);
+                amount = Int32.Parse(textBox3.Text);
+            }
+            catch
+            {
+                return;
+            }
         textBox4.Text = Changer(start,place,amount);
         }
         public string Changer(string start, int place, int amount)
@@ -51,7 +58,7 @@ namespace Interp
                     }
                 }
                 if (curWord==place && !inside) { findex = i;inside = true; }
-                if (wasWord && inside && !nowWord && numb==amount-1 ) { lindex = i-1; break; }    //НА 1 слово больше чем надо перемещает
+                if (wasWord && inside && !nowWord && numb==amount-1 ) { lindex = i-1; break; }  
                 wasWord = nowWord;
             }
             string change = start.Substring(findex,lindex-findex+1);
