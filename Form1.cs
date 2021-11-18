@@ -32,19 +32,26 @@ namespace Interp
         {
             while (start[0].Equals(space)) start = start.Remove(0,1);
             int curWord = 1;
-            bool nowWord = true;
+            bool nowWord;
             bool wasWord = true;
             bool inside = false;
             int findex = 0;
             int lindex = 0;
-            int numb = 0; //Допили тут
+            int numb = 0; 
             for (int i = 0; i < start.Length; i++)
             {
                 if (start[i].Equals(space)) nowWord = false;
                 else nowWord = true;
-                if (!wasWord && nowWord) curWord++;
-                if (curWord==place && inside == false) { findex = i;inside = true; }
-                if (wasWord==true && inside==true && nowWord == false) { lindex = i-1; break; }    //И тут у тебя условие неполное лох
+                if (!wasWord && nowWord)
+                { 
+                    curWord++;
+                    if (inside)
+                    {
+                        numb++;
+                    }
+                }
+                if (curWord==place && !inside) { findex = i;inside = true; }
+                if (wasWord && inside && !nowWord && numb==amount ) { lindex = i-1; break; }    //НА 1 слово больше чем надо перемещает
                 wasWord = nowWord;
             }
             string change = start.Substring(findex,lindex-findex+1);
