@@ -51,7 +51,7 @@ namespace Interp
                     }
                 }
                 if (curWord==place && !inside) { findex = i;inside = true; }
-                if (wasWord && inside && !nowWord && numb==amount ) { lindex = i-1; break; }    //НА 1 слово больше чем надо перемещает
+                if (wasWord && inside && !nowWord && numb==amount-1 ) { lindex = i-1; break; }    //НА 1 слово больше чем надо перемещает
                 wasWord = nowWord;
             }
             string change = start.Substring(findex,lindex-findex+1);
