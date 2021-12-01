@@ -31,25 +31,16 @@ namespace Interp
             catch { textBox4.Text = "Ошибка! Неверно указано количество перемещаемых слов."; return; }
         textBox4.Text = Changer(start,place,amount);
         }
-        public string Changer2(string start, int place, int amount)
-        {
-         var words = Regex.Matches(start, @"\w+").Cast<Match>()
-         .Select(m => m.Value);
-            List<string> wrds = new List<string> { };
-            foreach (var w in words) wrds.Add(w);
-            if (place < 1 || place > wrds.Count) return String.Format("Ошибка! Неверно указано с какого слова начать. Подходящие значения - от 1 до {0}",wrds.Count);
-            if (amount < 1 || amount > wrds.Count-place+1) return String.Format("Ошибка! Неверно указано количество перемещаемых слов.");
-            if (amount == wrds.Count ) return start;
-            return start;
-        }
+
         public string Changer(string start, int place, int amount)
         {
             var words = Regex.Matches(start, @"\w+").Cast<Match>().Select(m => m.Value);
             List<string> wrds = new List<string> { };
             foreach (var w in words) wrds.Add(w);
-            if (place < 1 || place > wrds.Count) return String.Format("Ошибка! Неверно указано с какого слова начать. Подходящие значения - от 1 до {0}", wrds.Count);
-            if (amount < 2 || amount > wrds.Count - place + 1) return String.Format("Ошибка! Неверно указано количество перемещаемых слов.");
             if (0 == wrds.Count) return "Ошибка! Введена строка без слов.";
+            if (1 == wrds.Count&&amount==1&&place==1) return start;
+            if (place < 1 || place > wrds.Count) return String.Format("Ошибка! Неверно указано с какого слова начать. Подходящие значения - от 1 до {0}", wrds.Count);
+            if (amount < 1 || amount > wrds.Count - place + 1) return String.Format("Ошибка! Неверно указано количество перемещаемых слов.");            
             if (amount == wrds.Count||place==1) return start;
             while (start[0].Equals(space)) start = start.Remove(0,1);
             int curWord = 1;
