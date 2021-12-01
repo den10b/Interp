@@ -25,15 +25,10 @@ namespace Interp
         private void button1_Click(object sender, EventArgs e)
         {
         start = textBox1.Text;
-            try
-            {
-                place = Int32.Parse(textBox2.Text);
-                amount = Int32.Parse(textBox3.Text);
-            }
-            catch
-            {
-                return;
-            }
+            try{place = Int32.Parse(textBox2.Text);}
+            catch{textBox4.Text= "Ошибка! Неверно указано с какого слова начать."; return; }
+            try { amount = Int32.Parse(textBox3.Text); }
+            catch { textBox4.Text = "Ошибка! Неверно указано количество перемещаемых слов."; return; }
         textBox4.Text = Changer(start,place,amount);
         }
         public string Changer2(string start, int place, int amount)
@@ -53,8 +48,9 @@ namespace Interp
             List<string> wrds = new List<string> { };
             foreach (var w in words) wrds.Add(w);
             if (place < 1 || place > wrds.Count) return String.Format("Ошибка! Неверно указано с какого слова начать. Подходящие значения - от 1 до {0}", wrds.Count);
-            if (amount < 1 || amount > wrds.Count - place + 1) return String.Format("Ошибка! Неверно указано количество перемещаемых слов.");
-            if (amount == wrds.Count) return start;
+            if (amount < 2 || amount > wrds.Count - place + 1) return String.Format("Ошибка! Неверно указано количество перемещаемых слов.");
+            if (0 == wrds.Count) return "Ошибка! Введена строка без слов.";
+            if (amount == wrds.Count||place==1) return start;
             while (start[0].Equals(space)) start = start.Remove(0,1);
             int curWord = 1;
             bool nowWord;
@@ -79,6 +75,7 @@ namespace Interp
                 if (wasWord && inside && !nowWord && numb==amount-1 ) { lindex = i-1; break; }  
                 wasWord = nowWord;
             }
+            if (lindex == 0) lindex = start.Length - 1;
             string change = start.Substring(findex,lindex-findex+1);
             start = start.Remove(findex, lindex - findex + 1);
             change = String.Concat(change + " " + start);
