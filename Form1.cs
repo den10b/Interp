@@ -29,7 +29,7 @@ namespace Interp
             catch{textBox4.Text= "Ошибка! Неверно указано с какого слова начать."; return; }
             try { amount = Int32.Parse(textBox3.Text); }
             catch { textBox4.Text = "Ошибка! Неверно указано количество перемещаемых слов."; return; }
-        textBox4.Text = Changer(start,place,amount);
+        textBox4.Text = Changer(start,place,amount-place+1);
         }
 
         public string Changer(string start, int place, int amount)
@@ -39,8 +39,9 @@ namespace Interp
             foreach (var w in words) wrds.Add(w);
             if (0 == wrds.Count) return "Ошибка! Введена строка без слов.";
             if (1 == wrds.Count&&amount==1&&place==1) return start;
-            if (place < 1 || place > wrds.Count) return String.Format("Ошибка! Неверно указано с какого слова начать. Подходящие значения - от 1 до {0}", wrds.Count);
-            if (amount < 1 || amount > wrds.Count - place + 1) return String.Format("Ошибка! Неверно указано количество перемещаемых слов.");            
+            if (place < 1 || place > wrds.Count) return String.Format("Ошибка ввода первого слова! Слово с таким индексом не содержится в строке. Подходящие знения - от 1 до {0}", wrds.Count);
+            if (amount + place - 1 > wrds.Count) return String.Format("Ошибка ввода последнего слова! Слово с таким индексом не содержится в строке. Подходящие знения - от 1 до {0}", wrds.Count);
+            if (amount <= 0) return String.Format("Ошибка! Индекс конца меньше индекса начала");
             if (amount == wrds.Count||place==1) return start;
             while (start[0].Equals(space)) start = start.Remove(0,1);
             int curWord = 1;
@@ -73,5 +74,14 @@ namespace Interp
             return change;
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
